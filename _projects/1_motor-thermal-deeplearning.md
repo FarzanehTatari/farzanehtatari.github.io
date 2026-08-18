@@ -4,7 +4,7 @@ title: Motor Thermal Modeling with Deep Learning
 description: Recurrent (LSTM, GRU) and feed-forward virtual sensors for online motor temperature estimation on the public Paderborn PMSM dataset. Methodology generalizes my industrial work on rare-earth-free EESM motors to an open benchmark.
 img: assets/img/12.jpg
 importance: 1
-category: automotive
+category: research
 related_publications: true
 ---
 
