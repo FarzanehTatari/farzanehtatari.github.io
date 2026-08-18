@@ -2,7 +2,7 @@
 layout: page
 title: Motor Thermal Modeling with Deep Learning
 description: Recurrent (LSTM, GRU) and feed-forward virtual sensors for online motor temperature estimation on the public Paderborn PMSM dataset. Methodology generalizes my industrial work on rare-earth-free EESM motors to an open benchmark.
-img: assets/img/12.jpg
+img: assets/img/motor-thermal.jpg
 importance: 1
 category: research
 related_publications: true
@@ -19,6 +19,7 @@ A clean, reproducible Python implementation of three deep-learning model familie
 All three are trained and evaluated with **leave-one-profile-out cross-validation** on the public Paderborn dataset, using train-only target standardization and early stopping on validation MAE.
 
 ## Headline result
+{% include figure.liquid loading="eager" path="assets/img/motor-thermal.png" title="Predicted vs ground-truth PM temperature trajectories on a held-out profile" class="img-fluid rounded z-depth-1" %}
 
 Cross-validation on the `pm` (permanent-magnet rotor temperature) target — 10 profiles × 5 random seeds = 50 runs per model.
 
