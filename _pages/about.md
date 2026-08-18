@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Senior Control & AI Engineer · <a href='https://drivesystemdesign.com/'>Drive System Design</a> · Ph.D., Michigan State University
+subtitle: Software Architecture Engineer · <a href='https://www.stellantis.com/'>Stellantis</a> · AI/ML for vehicle software · Ph.D., Michigan State University
 
 profile:
   align: right
@@ -27,7 +27,9 @@ latest_posts:
 
 I'm an **AI-driven Control Engineer and Researcher** with 10+ years of experience integrating **machine learning**, **reinforcement learning**, and **control theory** for real-world applications in **automotive**, **robotics**, and research environments.
 
-Currently, I'm a **Senior Control & AI Engineer at [Drive System Design](https://drivesystemdesign.com/)** in Farmington Hills, MI, where I lead control-system design and data-driven virtual-sensor development for electrified powertrains, and manage interdisciplinary engineering teams across the US and Europe.
+In **August 2026**, I'm joining **[Stellantis](https://www.stellantis.com/)** as a Senior Control & AI Engineer, focusing on **integrating AI into vehicle software development**.
+
+Most recently (April 2023 – August 2026), I was a **Senior Control & AI Engineer at [Drive System Design](https://drivesystemdesign.com/)** in Farmington Hills, MI, where I led control-system design and data-driven virtual-sensor development for electrified powertrains and managed interdisciplinary engineering teams across the US and Europe.
 
 Previously, I completed my **Ph.D. in Mechanical Engineering (Control) at Michigan State University**, researching stochastic and deterministic finite-time learning systems under NSF and ONR funding. Before that, I was a **postdoctoral researcher at the KIOS Center of Excellence, University of Cyprus**, and an **Assistant Professor of Control Systems at Semnan University**, Iran.
 
@@ -38,6 +40,8 @@ Previously, I completed my **Ph.D. in Mechanical Engineering (Control) at Michig
 - **Data-driven modeling** of electric motors and powertrains (thermal, condition monitoring)
 - **Multi-agent systems**, cooperative control, and distributed learning
 - **Vehicle dynamics** and connected-and-automated-vehicle (CAV) control
+- **AI/ML for the automotive industry** — production-ready ML pipelines, virtual sensors, embedded deployment
+- **Integrating AI into vehicle software development** — bringing modern ML tooling and workflows into automotive SW processes
 
 ### Selected recognition
 
