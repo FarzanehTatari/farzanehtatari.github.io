@@ -1,8 +1,6 @@
-# GitHub users to display as profile cards
 github_users:
   - FarzanehTatari
 
-# GitHub repositories to display as repo cards
 github_repos:
+  - FarzanehTatari/hybrid-sac-mpc-lateral-control
   - FarzanehTatari/motor-thermal-deeplearning
-  - FarzanehTatari/farzanehtatari.github.io
