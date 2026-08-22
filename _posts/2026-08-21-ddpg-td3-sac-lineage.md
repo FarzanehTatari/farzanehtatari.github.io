@@ -303,28 +303,29 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 a = np.linspace(-1.0, 1.0, 600)
+da = float(a[1] - a[0])
 
 Q = 1.00 * np.exp(-((a - 0.30) ** 2) / 0.090) + 1.12 * np.exp(-((a + 0.60) ** 2) / 0.0022)
 
 z = Q / alpha.value
 z = z - z.max()
 pi = np.exp(z)
-pi = pi / np.trapz(pi, a)
+pi = pi / (pi.sum() * da)
 
-entropy = float(-np.trapz(pi * np.log(pi + 1e-12), a))
+entropy = float(-(pi * np.log(pi + 1e-12)).sum() * da)
 a_mode = float(a[int(np.argmax(pi))])
 label = "broad optimum" if a_mode > 0 else "spurious spike"
 
-fig, ax = plt.subplots(figsize=(7.5, 3.6))
-ax.plot(a, Q, color="#9aa7b1", lw=2.4, label="critic  Q(s,a)")
-ax.fill_between(a, 0, pi / pi.max() * Q.max(), color="#2ecc71", alpha=0.40, label="policy  pi(a|s)")
-ax.axvline(a_mode, color="#ff6b5a", ls="--", lw=1.8)
+fig, ax = plt.subplots(figsize=(7.5, 3.4))
+ax.plot(a, Q, color="#5d6d7e", lw=2.4, label="critic  Q(s,a)")
+ax.fill_between(a, 0, pi / pi.max() * Q.max(), color="#27ae60", alpha=0.40, label="policy  pi(a|s)")
+ax.axvline(a_mode, color="#e74c3c", ls="--", lw=1.8)
 ax.set_xlabel("action  a")
 ax.set_ylabel("value / density (scaled)")
-ax.set_ylim(0, Q.max() * 1.18)
+ax.set_ylim(0, float(Q.max()) * 1.18)
 ax.legend(loc="upper left", fontsize=9)
 ax.grid(alpha=0.25)
-ax.set_title("mode at a = " + format(a_mode, ".2f") + "  (" + label + ")   |   entropy H = " + format(entropy, ".2f"))
+ax.set_title("mode at a = " + format(a_mode, ".2f") + "  (" + label + ")   |   H = " + format(entropy, ".2f"))
 fig
 ```
 
