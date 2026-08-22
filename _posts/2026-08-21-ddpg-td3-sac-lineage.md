@@ -6,6 +6,9 @@ description: Deep Deterministic Policy Gradient, Twin Delayed DDPG, and Soft Act
 tags: reinforcement-learning sac td3 ddpg actor-critic
 categories: reinforcement-learning-for-control
 marimo: true
+mermaid:
+  enabled: true
+  zoomable: true
 toc:
   sidebar: left
 giscus_comments: false
