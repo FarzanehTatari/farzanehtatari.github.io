@@ -9,6 +9,8 @@ marimo: true
 mermaid:
   enabled: true
   zoomable: true
+chart:
+  plotly: true
 toc:
   sidebar: left
 giscus_comments: false
@@ -32,25 +34,35 @@ They are better read as **one algorithm and two rounds of debugging**. Each succ
 - **MPC** — Model Predictive Control
 </div>
 
+<div class="alert alert-secondary" role="alert" markdown="1">
+**Reading the visuals.** Diagrams are click-to-zoom — click once to enlarge, click the background or press <kbd>Esc</kbd> to reset. The interactive chart has a toolbar in its top-right corner on hover; the **house icon** resets the axes after you pan or zoom.
+</div>
+
 ---
 
 ## The lineage at a glance
 
 ```mermaid
 graph LR
-    DQN["<b>DQN</b><br/>Deep Q-Network<br/><i>2015</i><br/>discrete actions only"]
-    DDPG["<b>DDPG</b><br/>Deep Deterministic<br/>Policy Gradient<br/><i>2015</i>"]
-    TD3["<b>TD3</b><br/>Twin Delayed DDPG<br/><i>2018</i>"]
-    SAC["<b>SAC</b><br/>Soft Actor-Critic<br/><i>2018</i>"]
+    DQN["<b>DQN</b><br/>Deep Q-Network<br/>2015 · discrete actions"]
+    DDPG["<b>DDPG</b><br/>Deep Deterministic<br/>Policy Gradient · 2015"]
+    TD3["<b>TD3</b><br/>Twin Delayed DDPG<br/>2018"]
+    SAC["<b>SAC</b><br/>Soft Actor-Critic<br/>2018"]
 
-    DQN -->|"continuous actions<br/>via a deterministic actor"| DDPG
+    DQN -->|"continuous actions via<br/>a deterministic actor"| DDPG
     DDPG -->|"fixes value<br/>overestimation"| TD3
     DDPG -->|"fixes exploration<br/>and brittleness"| SAC
     TD3 -.->|"twin critics<br/>carried over"| SAC
 
-    style DDPG fill:#f9d5a7,stroke:#333
-    style TD3 fill:#a7d5f9,stroke:#333
-    style SAC fill:#b5e8a7,stroke:#333
+    classDef ancestor fill:#dfe4e8,stroke:#5d6d7e,stroke-width:2px,color:#14202b
+    classDef problem  fill:#f7cfa4,stroke:#b9701a,stroke-width:2px,color:#3b2205
+    classDef fixblue  fill:#a9cce3,stroke:#21618c,stroke-width:2px,color:#0b2233
+    classDef fixgreen fill:#a9dfbf,stroke:#1d8348,stroke-width:2px,color:#0a2b18
+
+    class DQN ancestor
+    class DDPG problem
+    class TD3 fixblue
+    class SAC fixgreen
 ```
 
 TD3 and SAC are **not competitors**. They are two different diagnoses of the same patient — and SAC happens to have taken the other one's medicine too.
@@ -66,18 +78,13 @@ TD3 and SAC are **not competitors**. They are two different diagnoses of the sam
 </div>
 
 ```mermaid
-graph TB
-    subgraph collect["Data collection"]
-        ENV["Environment"]
-        NOISE["+ exploration noise<br/><i>externally injected</i>"]
-        BUF[("Replay buffer")]
-    end
-
-    subgraph learn["Learning"]
-        ACTOR["<b>Actor</b> μ(s)<br/>deterministic"]
-        CRITIC["<b>Critic</b> Q(s,a)"]
-        TARGETS["Target nets μ′, Q′<br/>slow Polyak update τ≈0.005"]
-    end
+graph LR
+    ACTOR["<b>Actor</b> μ(s)<br/>deterministic"]
+    NOISE["+ exploration noise<br/>externally injected"]
+    ENV["Environment"]
+    BUF[("Replay buffer")]
+    CRITIC["<b>Critic</b> Q(s,a)"]
+    TARGETS["Target nets μ′, Q′<br/>Polyak τ ≈ 0.005"]
 
     ACTOR --> NOISE --> ENV --> BUF
     BUF --> CRITIC
@@ -85,8 +92,13 @@ graph TB
     TARGETS --> CRITIC
     CRITIC -->|"∇a Q(s,a)"| ACTOR
 
-    style ACTOR fill:#f9d5a7
-    style CRITIC fill:#f9d5a7
+    classDef core    fill:#f7cfa4,stroke:#b9701a,stroke-width:2px,color:#3b2205
+    classDef support fill:#e8eaed,stroke:#7f8c8d,stroke-width:1.5px,color:#1c2833
+    classDef store   fill:#d4e6f1,stroke:#2471a3,stroke-width:1.5px,color:#0b2233
+
+    class ACTOR,CRITIC core
+    class NOISE,ENV,TARGETS support
+    class BUF store
 ```
 
 The TD target is
@@ -105,14 +117,20 @@ Two failures, and they compound.
 
 ```mermaid
 graph LR
-    A["Critic has<br/>approximation error"] --> B["Actor searches for<br/>the argmax"]
-    B --> C["Finds the error,<br/>not the truth"]
-    C --> D["Inflated Q enters<br/>the next TD target"]
-    D --> E["Critic learns<br/>the inflated value"]
-    E --> A
+    A["Critic has<br/>approximation error"]
+    B["Actor searches<br/>for the argmax"]
+    C["Finds the error,<br/>not the truth"]
+    D["Inflated Q enters<br/>the next TD target"]
+    E["Critic learns<br/>the inflated value"]
 
-    style C fill:#f8b5b5
-    style E fill:#f8b5b5
+    A --> B --> C --> D --> E
+    E -->|"and round again"| A
+
+    classDef neutral fill:#e8eaed,stroke:#7f8c8d,stroke-width:1.5px,color:#1c2833
+    classDef bad     fill:#f5b7b1,stroke:#a93226,stroke-width:2px,color:#3d0e0a
+
+    class A,B,D neutral
+    class C,E bad
 ```
 
 The TD target contains an implicit maximization. Approximation error is noise on top of the true value, and taking a near-maximum over a noisy estimate is **biased upward**. That inflated value feeds the next target. The bias doesn't wash out — it accumulates.
@@ -121,7 +139,7 @@ The TD target contains an implicit maximization. Approximation error is noise on
 **You can watch this happen.** Log the critic's predicted `Q(s,a)` against the discounted return actually achieved from that state. In a failing run the prediction drifts steadily above the truth and never comes back.
 </div>
 
-**Toggle the traces in the legend below** — hide "critic (overestimating)" and the healthy run looks unremarkable. That's exactly why this failure goes unnoticed if you only plot returns.
+**Click a legend entry to hide that trace.** Hide "critic — overestimating" and the healthy run looks unremarkable. That is exactly why this failure goes unnoticed if you only plot returns. Pan or zoom, then use the **house icon** in the toolbar to recenter.
 
 ```plotly
 {
@@ -129,30 +147,42 @@ The TD target contains an implicit maximization. Approximation error is noise on
     {
       "x": [0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300],
       "y": [0,11.3,19.5,25.3,29.5,32.4,34.6,36.1,37.2,38.0,38.6,39.0,39.3,39.5,39.6,39.7],
-      "type": "scatter", "mode": "lines", "name": "realized return (truth)",
-      "line": {"color": "#222", "width": 3}
+      "type": "scatter", "mode": "lines",
+      "name": "realized return (truth)",
+      "line": {"color": "#9aa7b1", "width": 4},
+      "hovertemplate": "truth: %{y:.1f}<extra></extra>"
     },
     {
       "x": [0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300],
       "y": [1.2,11.9,18.7,26.1,28.9,33.1,34.0,35.6,38.0,37.4,39.2,38.3,39.9,39.1,40.2,39.5],
-      "type": "scatter", "mode": "lines+markers", "name": "critic (healthy)",
-      "line": {"color": "#2a9d5c", "width": 2, "dash": "dot"}
+      "type": "scatter", "mode": "lines+markers",
+      "name": "critic — healthy",
+      "line": {"color": "#2ecc71", "width": 2.5},
+      "marker": {"size": 6},
+      "hovertemplate": "healthy: %{y:.1f}<extra></extra>"
     },
     {
       "x": [0,20,40,60,80,100,120,140,160,180,200,220,240,260,280,300],
       "y": [0.8,13.9,24.7,33.1,39.9,45.4,50.2,54.3,58.0,61.4,64.6,67.6,70.5,73.3,76.0,78.7],
-      "type": "scatter", "mode": "lines+markers", "name": "critic (overestimating)",
-      "line": {"color": "#c0392b", "width": 2, "dash": "dash"}
+      "type": "scatter", "mode": "lines+markers",
+      "name": "critic — overestimating",
+      "line": {"color": "#ff6b5a", "width": 2.5, "dash": "dash"},
+      "marker": {"size": 6, "symbol": "diamond"},
+      "hovertemplate": "overestimating: %{y:.1f}<extra></extra>"
     }
   ],
   "layout": {
-    "title": {"text": "Critic prediction vs. realized return"},
-    "xaxis": {"title": {"text": "training step (thousands)"}},
-    "yaxis": {"title": {"text": "value"}},
+    "title": {"text": "Critic prediction vs. realized return", "font": {"size": 16}},
+    "xaxis": {"title": {"text": "training step (thousands)"}, "gridcolor": "rgba(128,128,128,0.20)", "zeroline": false},
+    "yaxis": {"title": {"text": "value"}, "gridcolor": "rgba(128,128,128,0.20)", "zeroline": false},
+    "paper_bgcolor": "rgba(0,0,0,0)",
+    "plot_bgcolor": "rgba(0,0,0,0)",
+    "font": {"color": "#9aa7b1"},
     "hovermode": "x unified",
-    "margin": {"t": 50, "r": 20, "b": 50, "l": 60},
+    "margin": {"t": 55, "r": 25, "b": 55, "l": 65},
     "legend": {"orientation": "h", "y": -0.25}
-  }
+  },
+  "config": {"displayModeBar": true, "displaylogo": false, "responsive": true}
 }
 ```
 
@@ -170,36 +200,40 @@ Add a deterministic policy whose exploration comes entirely from externally inje
 
 **Twin Delayed Deep Deterministic Policy Gradient** (Fujimoto, van Hoof & Meger, 2018). The paper's title is refreshingly literal: *Addressing Function Approximation Error in Actor-Critic Methods*.
 
+Rather than three disconnected tricks, here is where each one sits in the flow that builds the TD target:
+
 ```mermaid
-graph TB
-    subgraph fix1["Fix 1 — Clipped double Q-learning"]
-        Q1["Critic Q₁"]
-        Q2["Critic Q₂"]
-        MIN["take min( Q₁′, Q₂′ )"]
-        Q1 --> MIN
-        Q2 --> MIN
-    end
+graph LR
+    S["s′ from<br/>replay buffer"]
+    MU["target actor<br/>μ′(s′)"]
+    SM["<b>FIX 3</b><br/>+ clipped noise ε<br/>target smoothing"]
+    AT["ã"]
+    Q1["Q′₁(s′, ã)"]
+    Q2["Q′₂(s′, ã)"]
+    MIN["<b>FIX 1</b><br/>min( · , · )<br/>clipped double Q"]
+    Y["TD target<br/>y = r + γ·min"]
+    CU["critic update<br/>every step"]
+    AU["<b>FIX 2</b><br/>actor update<br/>every d steps"]
 
-    subgraph fix2["Fix 2 — Delayed policy updates"]
-        CU["critic updates ×d"] --> AU["actor update ×1"]
-    end
+    S --> MU --> SM --> AT
+    AT --> Q1 --> MIN
+    AT --> Q2 --> MIN
+    MIN --> Y --> CU --> AU
 
-    subgraph fix3["Fix 3 — Target policy smoothing"]
-        SM["ã = μ′(s′) + clipped noise"]
-    end
+    classDef fix     fill:#a9cce3,stroke:#21618c,stroke-width:2.5px,color:#0b2233
+    classDef neutral fill:#e8eaed,stroke:#7f8c8d,stroke-width:1.5px,color:#1c2833
+    classDef target  fill:#a9dfbf,stroke:#1d8348,stroke-width:2px,color:#0a2b18
 
-    style MIN fill:#a7d5f9
-    style AU fill:#a7d5f9
-    style SM fill:#a7d5f9
+    class SM,MIN,AU fix
+    class S,MU,AT,Q1,Q2,CU neutral
+    class Y target
 ```
 
 | Fix | What it does | Why it works |
 | --- | --- | --- |
-| **Clipped double Q-learning** | Two critics; target uses the smaller | Underestimation doesn't compound — an underrated action just isn't selected, so it never poisons future targets |
-| **Delayed policy updates** | Actor updated once per `d` critic updates (`d = 2`) | An actor chasing a moving critic chases noise. Let the value settle first |
-| **Target policy smoothing** | Noise added to the target action | Enforces "nearby actions have similar values," flattening the narrow spurious peaks the actor would exploit |
-
-The TD target becomes
+| **1 — Clipped double Q-learning** | Two critics; target uses the smaller | Underestimation doesn't compound — an underrated action just isn't selected, so it never poisons future targets |
+| **2 — Delayed policy updates** | Actor updated once per `d` critic updates (`d = 2`) | An actor chasing a moving critic chases noise. Let the value settle first |
+| **3 — Target policy smoothing** | Noise added to the target action | Enforces "nearby actions have similar values," flattening the narrow spurious peaks the actor would exploit |
 
 $$ y = r + \gamma \min_{i=1,2} Q_i'(s', \tilde a), \qquad \tilde a = \mu'(s') + \varepsilon, \quad \varepsilon \sim \mathrm{clip}\big(\mathcal N(0,\sigma), -c, c\big) $$
 
@@ -219,6 +253,29 @@ $$ J(\pi) = \sum_t \mathbb{E}\Big[\, r(s_t, a_t) \;+\; \alpha\, \mathcal{H}\big(
 
 The agent is now rewarded for **acting as randomly as it can while still doing well**.
 
+```mermaid
+graph LR
+    OBJ["<b>Maximum-entropy<br/>objective</b>"]
+    E1["exploration<br/>becomes intrinsic"]
+    E2["policy stays<br/>stochastic"]
+    E3["α becomes the<br/>knob that matters"]
+    R1["no noise schedule<br/>to tune"]
+    R2["can't sit on a<br/>razor-thin optimum"]
+    R3["auto-tuned<br/>in SAC v2"]
+
+    OBJ --> E1 --> R1
+    OBJ --> E2 --> R2
+    OBJ --> E3 --> R3
+
+    classDef root   fill:#a9dfbf,stroke:#1d8348,stroke-width:2.5px,color:#0a2b18
+    classDef mid    fill:#d4efdf,stroke:#27ae60,stroke-width:2px,color:#0a2b18
+    classDef leaf   fill:#e8eaed,stroke:#7f8c8d,stroke-width:1.5px,color:#1c2833
+
+    class OBJ root
+    class E1,E2,E3 mid
+    class R1,R2,R3 leaf
+```
+
 ### Move the slider
 
 This is the part no static figure explains well. Below, a critic has two optima: a **broad, genuine** one near `a = +0.3`, and a **narrow, spurious spike** near `a = −0.6` — the kind of artifact a critic invents where it has little data.
@@ -229,7 +286,7 @@ Drag `α` and watch what the policy does.
 - **`α` moderate** — the policy prefers the broad optimum, because broad regions carry more entropy for the same value.
 - **`α` large** — the task reward stops mattering and the policy spreads out aimlessly.
 
-<div class="al-marimo-inline">
+<div class="al-marimo-inline" markdown="1">
 
 ```python
 import marimo as mo
@@ -247,11 +304,8 @@ import matplotlib.pyplot as plt
 
 a = np.linspace(-1.0, 1.0, 600)
 
-# critic landscape: one broad genuine optimum, one narrow spurious spike
-Q = 1.00 * np.exp(-((a - 0.30) ** 2) / 0.090) \
-  + 1.12 * np.exp(-((a + 0.60) ** 2) / 0.0022)
+Q = 1.00 * np.exp(-((a - 0.30) ** 2) / 0.090) + 1.12 * np.exp(-((a + 0.60) ** 2) / 0.0022)
 
-# Boltzmann (soft) policy induced by the temperature
 z = Q / alpha.value
 z = z - z.max()
 pi = np.exp(z)
@@ -262,17 +316,15 @@ a_mode = float(a[int(np.argmax(pi))])
 label = "broad optimum" if a_mode > 0 else "spurious spike"
 
 fig, ax = plt.subplots(figsize=(7.5, 3.6))
-ax.plot(a, Q, color="#222", lw=2.2, label="critic  Q(s,a)")
-ax.fill_between(a, 0, pi / pi.max() * Q.max(), color="#2a9d5c",
-                alpha=0.35, label="policy  π(a|s)")
-ax.axvline(a_mode, color="#c0392b", ls="--", lw=1.6)
+ax.plot(a, Q, color="#9aa7b1", lw=2.4, label="critic  Q(s,a)")
+ax.fill_between(a, 0, pi / pi.max() * Q.max(), color="#2ecc71", alpha=0.40, label="policy  pi(a|s)")
+ax.axvline(a_mode, color="#ff6b5a", ls="--", lw=1.8)
 ax.set_xlabel("action  a")
-ax.set_ylabel("value  /  density (scaled)")
-ax.set_ylim(0, Q.max() * 1.15)
+ax.set_ylabel("value / density (scaled)")
+ax.set_ylim(0, Q.max() * 1.18)
 ax.legend(loc="upper left", fontsize=9)
 ax.grid(alpha=0.25)
-ax.set_title("policy mode at a = " + format(a_mode, ".2f") + "  (" + label + ")"
-             + "   |   entropy H = " + format(entropy, ".2f"))
+ax.set_title("mode at a = " + format(a_mode, ".2f") + "  (" + label + ")   |   entropy H = " + format(entropy, ".2f"))
 fig
 ```
 
