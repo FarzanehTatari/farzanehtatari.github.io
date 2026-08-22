@@ -286,7 +286,7 @@ Drag `α` and watch what the policy does.
 - **`α` moderate** — the policy prefers the broad optimum, because broad regions carry more entropy for the same value.
 - **`α` large** — the task reward stops mattering and the policy spreads out aimlessly.
 
-<div class="al-marimo-inline" markdown="1">
+<div class="al-marimo-inline" data-show-code="false" markdown="1">
 
 ```python
 import marimo as mo
