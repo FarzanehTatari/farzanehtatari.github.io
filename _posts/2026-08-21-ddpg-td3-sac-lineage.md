@@ -286,7 +286,7 @@ Drag `α` and watch what the policy does.
 - **`α` moderate** — the policy prefers the broad optimum, because broad regions carry more entropy for the same value.
 - **`α` large** — the task reward stops mattering and the policy spreads out aimlessly.
 
-<div class="al-marimo-inline" data-show-code="false" markdown="1">
+<div class="al-marimo-inline" data-show-code="false" style="height:520px" markdown="1">
 
 ```python
 import marimo as mo
@@ -313,19 +313,35 @@ pi = np.exp(z)
 pi = pi / (pi.sum() * da)
 
 entropy = float(-(pi * np.log(pi + 1e-12)).sum() * da)
-a_mode = float(a[int(np.argmax(pi))])
-label = "broad optimum" if a_mode > 0 else "spurious spike"
 
-fig, ax = plt.subplots(figsize=(7.5, 3.4))
+# how much probability mass sits on each optimum
+mass_spike = float(pi[a < -0.25].sum() * da)
+mass_broad = float(pi[a >= -0.25].sum() * da)
+
+fig, ax = plt.subplots(figsize=(7.6, 3.6))
+
 ax.plot(a, Q, color="#5d6d7e", lw=2.4, label="critic  Q(s,a)")
-ax.fill_between(a, 0, pi / pi.max() * Q.max(), color="#27ae60", alpha=0.40, label="policy  pi(a|s)")
-ax.axvline(a_mode, color="#e74c3c", ls="--", lw=1.8)
 ax.set_xlabel("action  a")
-ax.set_ylabel("value / density (scaled)")
-ax.set_ylim(0, float(Q.max()) * 1.18)
-ax.legend(loc="upper left", fontsize=9)
-ax.grid(alpha=0.25)
-ax.set_title("mode at a = " + format(a_mode, ".2f") + "  (" + label + ")   |   H = " + format(entropy, ".2f"))
+ax.set_ylabel("critic value  Q", color="#5d6d7e")
+ax.set_ylim(0, float(Q.max()) * 1.20)
+ax.grid(alpha=0.22)
+
+ax2 = ax.twinx()
+ax2.fill_between(a, 0, pi, color="#27ae60", alpha=0.35, label="policy  pi(a|s)")
+ax2.plot(a, pi, color="#1e8449", lw=1.4)
+ax2.set_ylabel("policy density", color="#1e8449")
+ax2.set_ylim(0, float(pi.max()) * 1.20 + 1e-9)
+
+h1, l1 = ax.get_legend_handles_labels()
+h2, l2 = ax2.get_legend_handles_labels()
+ax.legend(h1 + h2, l1 + l2, loc="upper left", fontsize=9)
+
+ax.set_title(
+    "spurious spike: " + format(100 * mass_spike, ".0f") + "%"
+    + "     broad optimum: " + format(100 * mass_broad, ".0f") + "%"
+    + "     H = " + format(entropy, ".2f")
+)
+fig.tight_layout()
 fig
 ```
 
