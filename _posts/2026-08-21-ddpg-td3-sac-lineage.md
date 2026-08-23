@@ -290,44 +290,33 @@ Drag `α` and watch what the policy does.
 
 ```python
 import marimo as mo
-
-alpha = mo.ui.slider(
-    start=0.02, stop=1.5, step=0.02, value=0.20,
-    label="temperature α", show_value=True,
-)
+alpha = mo.ui.slider(start=0.02, stop=1.5, step=0.02, value=0.20, label="temperature α", show_value=True)
 alpha
 ```
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
-
 a = np.linspace(-1.0, 1.0, 600)
 da = float(a[1] - a[0])
-
 Q = 1.00 * np.exp(-((a - 0.30) ** 2) / 0.090) + 1.12 * np.exp(-((a + 0.60) ** 2) / 0.0022)
-
 z = Q / alpha.value
 z = z - z.max()
 pi = np.exp(z)
 pi = pi / (pi.sum() * da)
-
 entropy = float(-(pi * np.log(pi + 1e-12)).sum() * da)
 mass_spike = float(pi[a < -0.25].sum() * da)
 mass_broad = float(pi[a >= -0.25].sum() * da)
-
 fig, ax = plt.subplots(figsize=(7.6, 3.6))
 ax.plot(a, Q, color="#5d6d7e", lw=2.4, label="critic  Q(s,a)")
 ax.set_xlabel("action  a")
 ax.set_ylabel("critic value  Q")
 ax.set_ylim(0, float(Q.max()) * 1.20)
 ax.grid(alpha=0.22)
-
 ax2 = ax.twinx()
 ax2.fill_between(a, 0, pi, color="#27ae60", alpha=0.35, label="policy  pi(a|s)")
 ax2.set_ylabel("policy density")
 ax2.set_ylim(0, float(pi.max()) * 1.20 + 1e-9)
-
 ax.set_title("spike " + format(100 * mass_spike, ".0f") + "%   |   broad " + format(100 * mass_broad, ".0f") + "%   |   H = " + format(entropy, ".2f"))
 fig
 ```
