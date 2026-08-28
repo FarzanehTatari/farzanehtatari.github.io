@@ -1,1 +1,152 @@
-# Populated later. Until then the CV page shows only the PDF download.
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Farzaneh Tatari, Ph.D.
+    - name: Current Role
+      value: Software Architecture Engineer, Stellantis — Auburn Hills, MI
+    - name: Email
+      value: fa_tatari@yahoo.com
+    - name: Profiles
+      value: <a href="https://scholar.google.com/citations?user=kocqXnAAAAAJ">Google Scholar</a> · <a href="https://github.com/FarzanehTatari">GitHub</a> · <a href="https://www.linkedin.com/in/farzaneh-tatari-75296a115/">LinkedIn</a> · <a href="https://orcid.org/0000-0001-5176-3372">ORCID</a>
+
+- title: Summary
+  type: text
+  contents: Senior Control & AI Engineer with 10+ years of experience designing and validating real-time embedded control systems for automotive powertrains and complex electromechanical systems. Three years of production experience with electrified powertrain controls spanning MIL/SIL/HIL through vehicle-level integration, now applied to software architecture in electrified propulsion. Strong foundation in model predictive control, state estimation, and data-driven CAE modeling for energy and thermal management, with a Ph.D. in control and an IEEE publication record in learning-based control and system identification.
+
+- title: Experience
+  type: time_table
+  contents:
+    - title: Software Architecture Engineer
+      institution: Stellantis, Auburn Hills, MI
+      year: Aug 2026 – Present
+      description:
+        - Software architecture for electrified propulsion systems.
+
+    - title: Senior Control & AI Engineer
+      institution: Drive System Design, Farmington Hills, MI
+      year: Apr 2023 – Aug 2026
+      description:
+        - Designed, implemented, and validated embedded control systems for electrified powertrains across MIL, SIL, HIL, and vehicle-level testing.
+        - Developed data-driven CAE models using supervised machine learning and deep learning for thermal estimation in electrically excited and rare-earth-free synchronous motors, enabling reduced sensor count and improved energy management in production powertrain controllers.
+        - Technical lead of a team of 8 engineers across the US and North Africa, automating systems engineering analysis of diagnostic default-action disclosure reports for production embedded software.
+        - Managed a team of 4 engineers across the US and UK developing embedded control and diagnostic software for production powertrain controllers.
+        - Designed automation pipelines in MATLAB/Simulink that reduced controls software analysis and report-generation time.
+        - Partnered with OEM and supplier customers on production-ready embedded controls software, diagnostics, and validation deliverables.
+        - Collaborated on Design Failure Mode and Effects Analysis (DFMEA) for powertrain control systems in support of safety-related design analyses.
+
+    - title: Research Assistant (Ph.D.)
+      institution: Michigan State University, East Lansing, MI
+      year: Aug 2021 – May 2023
+      description:
+        - Conducted NSF- and ONR-funded research on stochastic and deterministic learning systems, focusing on finite-time system identification and online learning under uncertainty.
+        - Developed algorithms for data-regularized concurrent learning and adaptive control with formal convergence guarantees, validated on vehicle and robotic dynamics case studies.
+        - Published several IEEE journal papers on learning-based control, system identification, and stability analysis of dynamic systems.
+
+    - title: Postdoctoral Researcher
+      institution: KIOS Center of Excellence, University of Cyprus, Nicosia
+      year: Feb 2019 – Nov 2020
+      description:
+        - Designed finite-time distributed learning and estimation algorithms for nonlinear interconnected systems, with relevance to multi-subsystem powertrain and energy networks.
+        - Collaborated with multi-disciplinary teams on cyber-physical system modeling, networked control, and robust estimation.
+
+    - title: Assistant Professor, Control Systems
+      institution: Semnan University, Semnan, Iran
+      year: Sep 2016 – Feb 2019
+      description:
+        - Led research on distributed optimal and adaptive control of multi-agent networked systems using reinforcement learning and game theory.
+        - Taught modern, nonlinear, and optimal control; supervised graduate research in control of complex dynamic systems.
+
+- title: Education
+  type: time_table
+  contents:
+    - title: Ph.D., Mechanical Engineering (Control)
+      institution: Michigan State University, East Lansing, MI
+      year: 2021 – 2023
+      description:
+        - "GPA 4.0/4.0"
+        - "Dissertation: Stochastic and Deterministic Finite-time System Identification"
+
+    - title: Ph.D., Electrical Engineering (Control)
+      institution: Ferdowsi University of Mashhad, Iran
+      year: ""
+      description:
+        - "Ranked 1st · GPA 4.0/4.0"
+        - "Dissertation: Online Optimal Control in Differential Graphical Games Using Reinforcement Learning"
+
+    - title: M.Sc., Electrical Engineering (Control)
+      institution: Ferdowsi University of Mashhad, Iran
+      year: ""
+      description:
+        - "GPA 4.0/4.0"
+
+    - title: B.Sc., Electrical Engineering (Control)
+      institution: Shahrood University of Technology, Iran
+      year: ""
+      description:
+        - "Ranked 1st"
+
+- title: Selected Projects
+  type: time_table
+  contents:
+    - title: <a href="https://github.com/FarzanehTatari/hybrid-sac-mpc-lateral-control">Hybrid MPC + Learned Control Architecture</a>
+      year: 2025 – 2026
+      description: Independent project combining model predictive control with a Soft Actor-Critic policy for safe vehicle lateral control. Demonstrates safe composition of a learned policy with MPC while retaining hard actuator constraints. Python/PyTorch with pytest-based unit tests. Preprint: <a href="https://arxiv.org/abs/2608.17258">arXiv:2608.17258</a>.
+
+    - title: <a href="https://github.com/FarzanehTatari/motor-thermal-deeplearning">Data-driven Thermal Management for Electric Powertrains</a>
+      year: 2024 – 2026
+      description: Deep learning models for thermal estimation in electrically excited and rare-earth-free synchronous motors, supporting virtual sensing and predictive energy management. Published at IEEE ITEC (2024) and NDIA GVSETS (2026). Open-source reference implementation on the public Paderborn PMSM dataset.
+
+    - title: Distributed Adaptive Control of Networked Systems
+      year: 2016 – 2020
+      description: Distributed optimal adaptive control of networked systems using reinforcement learning and game theory; finite-time identification methods for estimating subsystem coupling.
+
+    - title: Online Stochastic Learning for Vehicle & Robot Dynamics
+      year: 2021 – 2025
+      description: Online stochastic learning algorithms with formal finite-time convergence guarantees for vehicle and robot dynamics models, suitable for real-time control under noise and uncertainty.
+
+- title: Technical Skills
+  type: nested_list
+  contents:
+    - title: Control
+      items:
+        - Optimal, adaptive, robust, nonlinear, and linear control
+        - Model predictive control
+        - State estimation, Kalman filtering, system identification
+    - title: Embedded & Validation
+      items:
+        - MIL / SIL / HIL / vehicle-level testing
+        - Embedded controls software, real-time controls, diagnostics
+        - Model-based design, DFMEA
+    - title: Modeling & Simulation
+      items:
+        - MATLAB / Simulink, Rhapsody
+        - Physics-based and data-driven CAE modeling
+        - Vehicle and powertrain simulation
+    - title: Machine Learning & AI
+      items:
+        - Supervised machine learning, deep learning
+        - Reinforcement learning, optimization
+        - PyTorch
+    - title: Programming & Tools
+      items:
+        - C++, Python, MATLAB
+        - Git, pytest, CANalyzer, Polarion, ALM, Plastic
+
+- title: Honors & Service
+  type: time_table
+  contents:
+    - year: 2023
+      items:
+        - Fitch Beach Medal for Outstanding Graduate Research, Michigan State University
+    - year: 2022 – 2023
+      items:
+        - GOF and DCF Fellowships, Michigan State University
+    - year: Ongoing
+      items:
+        - Guest Associate Editor, <em>Frontiers in Control Engineering</em>
+        - Reviewer for <em>Automatica</em>, <em>IEEE TNNLS</em>, and other journals
+
+- title: Publications
+  type: text
+  contents: Full list on the <a href="/publications/">publications page</a> and <a href="https://scholar.google.com/citations?user=kocqXnAAAAAJ">Google Scholar</a>.
