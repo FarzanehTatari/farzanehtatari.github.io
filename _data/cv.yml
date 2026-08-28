@@ -92,7 +92,7 @@
   contents:
     - title: <a href="https://github.com/FarzanehTatari/hybrid-sac-mpc-lateral-control">Hybrid MPC + Learned Control Architecture</a>
       year: 2025 – 2026
-      description: Independent project combining model predictive control with a Soft Actor-Critic policy for safe vehicle lateral control. Demonstrates safe composition of a learned policy with MPC while retaining hard actuator constraints. Python/PyTorch with pytest-based unit tests. Preprint: <a href="https://arxiv.org/abs/2608.17258">arXiv:2608.17258</a>.
+      description: Independent project combining model predictive control with a Soft Actor-Critic policy for safe vehicle lateral control. Demonstrates safe composition of a learned policy with MPC while retaining hard actuator constraints. Python/PyTorch with pytest-based unit tests. Preprint — <a href="https://arxiv.org/abs/2608.17258">arXiv:2608.17258</a>.
 
     - title: <a href="https://github.com/FarzanehTatari/motor-thermal-deeplearning">Data-driven Thermal Management for Electric Powertrains</a>
       year: 2024 – 2026
