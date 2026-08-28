@@ -11,8 +11,9 @@
       value: <a href="https://scholar.google.com/citations?user=kocqXnAAAAAJ">Google Scholar</a> · <a href="https://github.com/FarzanehTatari">GitHub</a> · <a href="https://www.linkedin.com/in/farzaneh-tatari-75296a115/">LinkedIn</a> · <a href="https://orcid.org/0000-0001-5176-3372">ORCID</a>
 
 - title: Summary
-  type: text
-  contents: Senior Control & AI Engineer with 10+ years of experience designing and validating real-time embedded control systems for automotive powertrains and complex electromechanical systems. Three years of production experience with electrified powertrain controls spanning MIL/SIL/HIL through vehicle-level integration, now applied to software architecture in electrified propulsion. Strong foundation in model predictive control, state estimation, and data-driven CAE modeling for energy and thermal management, with a Ph.D. in control and an IEEE publication record in learning-based control and system identification.
+  type: list
+  contents:
+    - Senior Control & AI Engineer with 10+ years of experience designing and validating real-time embedded control systems for automotive powertrains and complex electromechanical systems. Three years of production experience with electrified powertrain controls spanning MIL/SIL/HIL through vehicle-level integration, now applied to software architecture in electrified propulsion. Strong foundation in model predictive control, state estimation, and data-driven CAE modeling for energy and thermal management, with a Ph.D. in control and an IEEE publication record in learning-based control and system identification.
 
 - title: Experience
   type: time_table
@@ -148,5 +149,6 @@
         - Reviewer for <em>Automatica</em>, <em>IEEE TNNLS</em>, and other journals
 
 - title: Publications
-  type: text
-  contents: Full list on the <a href="/publications/">publications page</a> and <a href="https://scholar.google.com/citations?user=kocqXnAAAAAJ">Google Scholar</a>.
+  type: list
+  contents:
+    - Full list on the <a href="/publications/">publications page</a> and <a href="https://scholar.google.com/citations?user=kocqXnAAAAAJ">Google Scholar</a>.
