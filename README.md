@@ -7,6 +7,7 @@ Control systems, machine learning, and reinforcement learning for automotive and
 ## Contents
 
 - **About** — background, research interests, current role
+- **Blog** — notes on control, RL, and machine learning
 - **Publications** — peer-reviewed papers (also on [Google Scholar](https://scholar.google.com/citations?user=kocqXnAAAAAJ))
 - **Projects** — open-source code accompanying my research
 - **Repositories** — live GitHub activity
