@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: Software Architecture Engineer · <a href='https://www.stellantis.com/'>Stellantis</a> · AI/ML for vehicle software · Ph.D., Michigan State University
+subtitle: Control Software Architect · <a href='https://www.stellantis.com/'>Stellantis</a> · AI/ML for vehicle software · Ph.D., Michigan State University
 
 profile:
   align: right
