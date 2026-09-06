@@ -27,7 +27,7 @@ latest_posts:
 
 I'm an **AI-driven Control Engineer and Researcher** with 10+ years of experience integrating **machine learning**, **reinforcement learning**, and **control theory** for real-world applications in **automotive**, **robotics**, and research environments.
 
-In **August 2026**, I'm joining **[Stellantis](https://www.stellantis.com/)** as a Senior Control & AI Engineer, focusing on **integrating AI into vehicle software development**.
+In **August 2026**, I'm joining **[Stellantis](https://www.stellantis.com/)** as a Control Software Architect, focusing on **integrating AI into vehicle software development**.
 
 Most recently (April 2023 – August 2026), I was a **Senior Control & AI Engineer at [Drive System Design](https://drivesystemdesign.com/)** in Farmington Hills, MI, where I led control-system design and data-driven virtual-sensor development for electrified powertrains and managed interdisciplinary engineering teams across the US and Europe.
 
