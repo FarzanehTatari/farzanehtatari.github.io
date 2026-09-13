@@ -265,7 +265,7 @@ These traces are illustrative, generated to show the blending mechanic. The meas
    ],
    "type": "scatter",
    "mode": "lines",
-   "name": "\u03b4_MPC  (model-based)",
+   "name": "\u03b4 MPC",
    "line": {
     "color": "#6c8ebf",
     "width": 2,
@@ -402,7 +402,7 @@ These traces are illustrative, generated to show the blending mechanic. The meas
    ],
    "type": "scatter",
    "mode": "lines",
-   "name": "\u03b4_SAC  (learned)",
+   "name": "\u03b4 SAC",
    "line": {
     "color": "#b58b6a",
     "width": 2,
@@ -539,7 +539,7 @@ These traces are illustrative, generated to show the blending mechanic. The meas
    ],
    "type": "scatter",
    "mode": "lines",
-   "name": "\u03b4 applied  (blend)",
+   "name": "\u03b4 applied",
    "line": {
     "color": "#2f9e8f",
     "width": 4
@@ -675,7 +675,7 @@ These traces are illustrative, generated to show the blending mechanic. The meas
    ],
    "type": "scatter",
    "mode": "lines",
-   "name": "\u00b1\u03b4_max  (actuator bound)",
+   "name": "\u00b1\u03b4 max",
    "line": {
     "color": "#c0554e",
     "width": 1.5,
@@ -823,7 +823,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
  ],
  "layout": {
   "title": {
-   "text": "\u03bb = 0   \u2192   \u03b1 = 0.00   \u00b7   pure MPC"
+   "text": "\u03bb = 0   \u2192   \u03b1 = 0.00   \u00b7   pure MPC",
+   "x": 0.02,
+   "xanchor": "left",
+   "y": 0.97,
+   "yanchor": "top"
   },
   "xaxis": {
    "title": {
@@ -841,16 +845,16 @@ These traces are illustrative, generated to show the blending mechanic. The meas
    ],
    "zeroline": true
   },
-  "height": 540,
+  "height": 560,
   "margin": {
    "l": 70,
    "r": 30,
-   "t": 105,
+   "t": 130,
    "b": 130
   },
   "legend": {
    "orientation": "h",
-   "y": 1.06,
+   "y": 1.02,
    "x": 0,
    "xanchor": "left",
    "yanchor": "bottom"
@@ -1196,7 +1200,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 0   \u2192   \u03b1 = 0.00   \u00b7   pure MPC"
+         "text": "\u03bb = 0   \u2192   \u03b1 = 0.00   \u00b7   pure MPC",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -1526,7 +1534,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 0.25   \u2192   \u03b1 = 0.20   \u00b7   blended"
+         "text": "\u03bb = 0.25   \u2192   \u03b1 = 0.20   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -1856,7 +1868,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 0.5   \u2192   \u03b1 = 0.33   \u00b7   blended"
+         "text": "\u03bb = 0.5   \u2192   \u03b1 = 0.33   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -2186,7 +2202,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 1   \u2192   \u03b1 = 0.50   \u00b7   blended"
+         "text": "\u03bb = 1   \u2192   \u03b1 = 0.50   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -2516,7 +2536,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 2   \u2192   \u03b1 = 0.67   \u00b7   blended"
+         "text": "\u03bb = 2   \u2192   \u03b1 = 0.67   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -2846,7 +2870,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 4   \u2192   \u03b1 = 0.80   \u00b7   blended"
+         "text": "\u03bb = 4   \u2192   \u03b1 = 0.80   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -3176,7 +3204,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 8   \u2192   \u03b1 = 0.89   \u00b7   blended"
+         "text": "\u03bb = 8   \u2192   \u03b1 = 0.89   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -3506,7 +3538,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 12   \u2192   \u03b1 = 0.92   \u00b7   blended"
+         "text": "\u03bb = 12   \u2192   \u03b1 = 0.92   \u00b7   blended",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -3836,7 +3872,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 30   \u2192   \u03b1 = 0.97   \u00b7   near-pure SAC"
+         "text": "\u03bb = 30   \u2192   \u03b1 = 0.97   \u00b7   near-pure SAC",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
@@ -4166,7 +4206,11 @@ These traces are illustrative, generated to show the blending mechanic. The meas
        },
        {
         "title": {
-         "text": "\u03bb = 100   \u2192   \u03b1 = 0.99   \u00b7   near-pure SAC"
+         "text": "\u03bb = 100   \u2192   \u03b1 = 0.99   \u00b7   near-pure SAC",
+         "x": 0.02,
+         "xanchor": "left",
+         "y": 0.97,
+         "yanchor": "top"
         }
        }
       ]
