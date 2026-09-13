@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://farzanehtatari.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://farzanehtatari.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-09-13T12:46:26+00:00</updated><id>https://farzanehtatari.github.io/feed.xml</id><title type="html">blank</title><subtitle>Personal academic site — control systems, machine learning, and reinforcement learning for automotive and robotics applications. </subtitle><entry><title type="html">Three ways to combine RL and MPC, and what each actually guarantees</title><link href="https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies/" rel="alternate" type="text/html" title="Three ways to combine RL and MPC, and what each actually guarantees"/><published>2026-09-13T00:00:00+00:00</published><updated>2026-09-13T00:00:00+00:00</updated><id>https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies</id><content type="html" xml:base="https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies/"><![CDATA[<p>A deep reinforcement learning policy will out-track a hand-tuned controller on the scenarios it was trained on. It will also, in a situation it has never seen, command whatever its weights happen to produce — and you have no statement to make about what that will be.</p> <p>Model predictive control gives you the statement. It also gives you a controller that is only as good as the model inside it.</p> <p>This is usually presented as a choice. In practice, nobody chooses: the literature is full of architectures that use both. What varies is <em>how</em> they are combined, and the difference matters more than it first appears — because each combination preserves a different guarantee, and several preserve less than their authors’ language suggests.</p> <div class="alert alert-info" role="alert"> <p><strong>The abbreviations, once:</strong></p> <ul> <li><strong>RL</strong> — Reinforcement Learning</li> <li><strong>MPC</strong> — Model Predictive Control</li> <li><strong>SAC</strong> — Soft Actor-Critic</li> <li><strong>QP</strong> — Quadratic Program</li> <li><strong>CBF</strong> — Control Barrier Function</li> <li><strong>RMSE</strong> — Root Mean Square Error</li> </ul> </div> <div class="alert alert-secondary" role="alert"> <p><strong>Reading the visuals.</strong> Diagrams are click-to-zoom — click once to enlarge, click the background or press <kbd>Esc</kbd> to reset. The interactive chart has a toolbar in its top-right corner on hover; the <strong>house icon</strong> resets the axes after you pan or zoom.</p> </div> <hr/> <h2 id="the-shape-of-the-problem">The shape of the problem</h2> <p>Every combination strategy is answering the same question: <em>the learned policy has proposed an action — now what?</em></p> <pre><code class="language-mermaid">graph LR
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="https://farzanehtatari.github.io/feed.xml" rel="self" type="application/atom+xml"/><link href="https://farzanehtatari.github.io/" rel="alternate" type="text/html" hreflang="en"/><updated>2026-09-13T12:55:32+00:00</updated><id>https://farzanehtatari.github.io/feed.xml</id><title type="html">blank</title><subtitle>Personal academic site — control systems, machine learning, and reinforcement learning for automotive and robotics applications. </subtitle><entry><title type="html">Three ways to combine RL and MPC, and what each actually guarantees</title><link href="https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies/" rel="alternate" type="text/html" title="Three ways to combine RL and MPC, and what each actually guarantees"/><published>2026-09-13T00:00:00+00:00</published><updated>2026-09-13T00:00:00+00:00</updated><id>https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies</id><content type="html" xml:base="https://farzanehtatari.github.io/blog/2026/rl-mpc-combination-strategies/"><![CDATA[<p>A deep reinforcement learning policy will out-track a hand-tuned controller on the scenarios it was trained on. It will also, in a situation it has never seen, command whatever its weights happen to produce — and you have no statement to make about what that will be.</p> <p>Model predictive control gives you the statement. It also gives you a controller that is only as good as the model inside it.</p> <p>This is usually presented as a choice. In practice, nobody chooses: the literature is full of architectures that use both. What varies is <em>how</em> they are combined, and the difference matters more than it first appears — because each combination preserves a different guarantee, and several preserve less than their authors’ language suggests.</p> <div class="alert alert-info" role="alert"> <p><strong>The abbreviations, once:</strong></p> <ul> <li><strong>RL</strong> — Reinforcement Learning</li> <li><strong>MPC</strong> — Model Predictive Control</li> <li><strong>SAC</strong> — Soft Actor-Critic</li> <li><strong>QP</strong> — Quadratic Program</li> <li><strong>CBF</strong> — Control Barrier Function</li> <li><strong>RMSE</strong> — Root Mean Square Error</li> </ul> </div> <div class="alert alert-secondary" role="alert"> <p><strong>Reading the visuals.</strong> Diagrams are click-to-zoom — click once to enlarge, click the background or press <kbd>Esc</kbd> to reset. The interactive chart has a toolbar in its top-right corner on hover; the <strong>house icon</strong> resets the axes after you pan or zoom.</p> </div> <hr/> <h2 id="the-shape-of-the-problem">The shape of the problem</h2> <p>Every combination strategy is answering the same question: <em>the learned policy has proposed an action — now what?</em></p> <pre><code class="language-mermaid">graph LR
     S["state x"] --&gt; RL["learned policy&lt;br/&gt;π(x)"]
     S --&gt; MB["model-based&lt;br/&gt;component"]
     RL --&gt; C{"combination&lt;br/&gt;rule"}
@@ -735,22 +735,24 @@
    ],
    "zeroline": true
   },
-  "height": 470,
+  "height": 540,
   "margin": {
    "l": 70,
    "r": 30,
-   "t": 60,
-   "b": 90
+   "t": 105,
+   "b": 130
   },
   "legend": {
    "orientation": "h",
-   "y": -0.28,
-   "x": 0
+   "y": 1.06,
+   "x": 0,
+   "xanchor": "left",
+   "yanchor": "bottom"
   },
   "sliders": [
    {
     "active": 0,
-    "y": -0.06,
+    "y": -0.22,
     "x": 0.06,
     "len": 0.88,
     "currentvalue": {
@@ -759,7 +761,7 @@
      "xanchor": "left"
     },
     "pad": {
-     "t": 45,
+     "t": 40,
      "b": 10
     },
     "steps": [
