@@ -1,7 +1,7 @@
 ---
 layout: page
-title: doc-agent — AI Documentation for Simulink Control Models
-description: An LLM agent that reads Simulink models and writes their documentation. Extracts model structure through MATLAB, grounds generation in tool calls against the real model, and exports to HTML, DOCX, and PDF.
+title: doc-agent — Simulink Documentation
+description: An LLM agent that reads Simulink models and writes their documentation — grounded in tool calls against the real model, exported to HTML, DOCX, and PDF.
 img: assets/img/doc-agent.png
 importance: 3
 category: tools
